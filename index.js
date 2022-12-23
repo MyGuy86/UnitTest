@@ -16,6 +16,17 @@ describe('Unit Test', function(){
             done();
         }); 
     })
+
+    it('getcustomers', function(done){
+        chai.request(baseurl)
+        .get('/customers')
+        .set("authorization", "Basic") //replace Basic with JWT
+        .end(function (err, res) {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.an("array");
+            done();
+        }); 
+    })
     
     it('getelevators', function(done){
         chai.request(baseurl)
@@ -39,20 +50,64 @@ describe('Unit Test', function(){
         }); 
     })
 
-    it('postintervention', function(done) {
-        let int = {
-            employee_id: 1,
-            elevator_id: 1,
-            column_id: 1,
-            battery_id: 1,
-            building_id: 1,
-            customer_id: 1, 
-            result: 'test',
-            status: 'test'
-        }
+    it('getcolumnsbybattery', function(done){
         chai.request(baseurl)
-        .post('/interventions/new')
-        .send(int)
+        .get(`/batteries/5/columns`)
+        .set("authorization", "Basic") //replace Basic with JWT
+        .end(function (err, res) {
+            expect(res).to.have.status(200);
+            expect(res.body).to.be.an("array");
+            done();
+        }); 
+    })
+
+    it('getbatteriesbyid', function(done){
+        chai.request(baseurl)
+        .get(`/batteries/9`)
+        .set("authorization", "Basic") //replace Basic with JWT
+        .end(function (err, res) {
+            expect(res).to.have.status(200);
+            // expect(res.body).to.be.an("array");
+            done();
+        }); 
+    })
+
+    it('getbuildingsbyid', function(done){
+        chai.request(baseurl)
+        .get(`/buildings/9`)
+        .set("authorization", "Basic") //replace Basic with JWT
+        .end(function (err, res) {
+            expect(res).to.have.status(200);
+            // expect(res.body).to.be.an("array");
+            done();
+        }); 
+    })
+
+    it('getusersbyid', function(done){
+        chai.request(baseurl)
+        .get(`/users/9`)
+        .set("authorization", "Basic") //replace Basic with JWT
+        .end(function (err, res) {
+            expect(res).to.have.status(200);
+            // expect(res.body).to.be.an("array");
+            done();
+        }); 
+    })
+
+    it('postintervention', function(done) {
+        // let int = {
+        //     employee_id: 1,
+        //     elevator_id: 1,
+        //     column_id: 1,
+        //     battery_id: 1,
+        //     building_id: 1,
+        //     customer_id: 1, 
+        //     result: 'test',
+        //     status: 'test'
+        // }
+        chai.request(baseurl)
+        .post('/interventions/new?employee_id=1&elevator_id=1&column_id=1&battery_id=1&building_id=1&customer_id=1&result=test&status=test')
+        // .send(int)
         .set("authorization", "Basic") //replace Basic with JWT
         .end(function (err, res) {
             expect(res).to.have.status(200);
